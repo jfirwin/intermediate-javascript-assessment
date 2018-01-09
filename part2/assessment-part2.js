@@ -44,7 +44,15 @@ function noWeakLink() {
     url: '/api/users'
   })
   // CODE HERE...
+  .then(response => {
+    firstUser = response.data[0]
+    return(response)
+  })
 
+  .then(response => {
+    thirdUser = response.data[2]
+    return response.data[9]
+  })
 }
 
 
@@ -74,7 +82,7 @@ function large() {
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
-
+var boundToElephant = large.bind(elephant)
 
 
 // *************
@@ -88,7 +96,10 @@ function large() {
 // and return the bound function.
 
 // CODE HERE...
-
+function deathStar(capacity, crew) {
+  var boundFn = capacity.bind(crew)
+  return boundFn
+}
 
 
 // *************
@@ -103,7 +114,11 @@ function large() {
 // The closure function will return the combined value of assets and liabilities.
 
 // CODE HERE...
-
+function accountingOffice(assets) {
+  return function (liabilities) {
+    return assets + liabilities
+  }
+}
 
 
 // *************
@@ -128,7 +143,16 @@ function large() {
 // };
 
 // CODE HERE...
-
+function forgetter(name) {
+  var list = {
+        name: name,
+        remember: []
+      }
+  return function rememberall(item) {
+    list.remember.push(item)
+    return list
+  }
+}
 
 
 // *************
@@ -156,3 +180,35 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+function frodo(startingHungerValue, startingDangerValue) {
+  var hungerValue = startingHungerValue
+  var dangerValue = startingDangerValue
+  return {
+    dinnerOverFire: function() {
+      if (hungerValue <= 25) {
+        hungerValue = 0
+      } else if (hungerValue > 25) {
+        hungerValue -= 25
+      }
+      if (dangerValue < 60) {
+        dangerValue += 40
+      } else if (dangerValue >= 60) {
+        dangerValue = 100
+      }
+      return {hunger: hungerValue, danger: dangerValue}
+    },
+    hidingInBush: function(){
+      if (hungerValue >= 65) {
+        hungerValue = 100
+      } else if (hungerValue < 65) {
+        hungerValue += 35
+      }
+      if (dangerValue <= 20) {
+        dangerValue = 0
+      } else if (dangerValue > 20) {
+        dangerValue -= 20
+      }
+      return {hunger: hungerValue, danger: dangerValue}
+    }
+  }
+}
